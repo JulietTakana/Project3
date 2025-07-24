@@ -49,8 +49,9 @@ public class MoodRepository {
     public Set<String> getAllMoods(){
         return moodSongs.keySet();
     }
+    
     public String getImageForMood(String mood) {
-    // First try JPG
+   
     String jpgPath = "images/" + mood + ".jpg";
     if (new File(jpgPath).exists()) {
         return jpgPath;

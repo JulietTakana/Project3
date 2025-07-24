@@ -2,6 +2,7 @@ package com.moodifyx;
 
 import javax.swing.*;
 import java.awt.Image; 
+import java.awt.Font;
 import java.io.File;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +14,7 @@ public class MoodSelectorUI extends JFrame {
     private JLabel songTitleLabel;   
 
     public MoodSelectorUI() {
-        setTitle("MoodifyX");
+        setTitle("Songs for your Mood");
         setSize(600, 500); 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -54,6 +55,7 @@ public class MoodSelectorUI extends JFrame {
                     SongPlayer.play(selected.getFilePath());
                     
                     songTitleLabel.setText("Now playing: " + selected.getTitle());
+
                 } else {
                     System.out.println("File not found");
                     songTitleLabel.setText("File not found for: " + selected.getTitle());
@@ -101,19 +103,23 @@ public class MoodSelectorUI extends JFrame {
         }
     }
 
-    private void updateMoodImage(String mood) {
-        String imagePath = repository.getImageForMood(mood);
-        System.out.println("Looking for image: " + imagePath);
-        File imgFile = new File(imagePath);
-        if (imgFile.exists()) {
-            
-            ImageIcon rawIcon = new ImageIcon(imagePath);
-            Image scaled = rawIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
-            moodImageLabel.setIcon(new ImageIcon(scaled));
-            moodImageLabel.setText("");
-        } else {
-            moodImageLabel.setIcon(null);
-            moodImageLabel.setText("No image available for " + mood);
-        }
+private void updateMoodImage(String mood) {
+    String imagePath = repository.getImageForMood(mood);
+    File imgFile = new File(imagePath);
+    if (imgFile.exists()) {
+        ImageIcon rawIcon = new ImageIcon(imagePath);
+        int desiredWidth = 1000;
+        int desiredHeight = 800;
+        Image scaled = rawIcon.getImage().getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
+        moodImageLabel.setIcon(new ImageIcon(scaled));
+        moodImageLabel.setText("");
+    } else {
+        moodImageLabel.setIcon(null);
+        moodImageLabel.setText("No image available for " + mood);
     }
 }
+
+
+
+}
+
